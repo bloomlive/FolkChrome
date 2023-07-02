@@ -2,7 +2,7 @@
     "name": "ViljandiFolker",
     "author": "Daniel Sepp",
     "description": "Unofficial Viljandi Folk schedule extension that allows you to easily create Google Calendar events from the schedule.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "manifest_version": 3,
     "permissions": [
         "activeTab",

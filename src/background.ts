@@ -11,12 +11,13 @@ const locations = new Map()
     .set(4938876, 'Jaak Johansoni Kultra lava')
 
 function createButton(): HTMLElement {
+    const isMobile: boolean = window.innerWidth < 993
     const button = document.createElement('a')
     button.innerText = '+'
     button.style.position = 'absolute'
-    button.style.fontWeight = 'semibold'
-    button.style.left = '0'
-    button.style.top = '0'
+    button.style.fontWeight = 'medium'
+    button.style.left = isMobile ? '10px' : '0'
+    button.style.top = isMobile ? '0' : '0'
     button.style.background = 'none'
     button.style.border = 'none'
 
