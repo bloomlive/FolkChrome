@@ -23,14 +23,17 @@ function createButton(): HTMLElement {
     return button
 }
 
-function createUrl(row: Element, startTime: string, endTime: string, locationId: number, detailsUrl: string): string {
+function createUrl(row: Element, startTime: Date, endTime: Date, locationId: number, detailsUrl: string): string {
     const url = new URL('https://www.google.com/calendar/render')
     url.searchParams.append('action', 'TEMPLATE')
     url.searchParams.append(
         'text',
         row.querySelector('.title')?.querySelector('div')?.textContent?.trim() ?? 'Something went wrong.'
     )
-    url.searchParams.append('dates', `${startTime}/${endTime}`)
+    url.searchParams.append(
+        'dates',
+        `${startTime.toISOString().replace(/-|:|\.\d+/g, '')}/${endTime.toISOString().replace(/-|:|\.\d+/g, '')}`
+    )
     url.searchParams.append('details', 'Vaata rohkem siit: ' + detailsUrl)
     url.searchParams.append('location', location ? locations.get(locationId) : 'Viljandi Pärimusmuusika Festival')
     url.searchParams.append('sf', 'true')
@@ -47,9 +50,13 @@ rows.forEach((row: Element) => {
     const start = row.getAttribute('data-box-start')
     const duration = Number((row as HTMLElement).style.height?.replace('px', '')) / 80
 
-    const startTime = new Date(Number(start) * 1000).toISOString().replace(/-|:|\.\d+/g, '')
+    const startTime = new Date(Number(start) * 1000)
+    const endTime = new Date(Number(start) * 1000 + duration * 60 * 60 * 1000)
 
-    const endTime = new Date(Number(start) * 1000 + duration * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, '')
+    if (startTime.getHours() < 6) {
+        startTime.setDate(startTime.getDate() + 1)
+        endTime.setDate(endTime.getDate() + 1)
+    }
 
     const location = Number(row.parentElement?.parentElement?.parentElement?.getAttribute('data-id'))
 
