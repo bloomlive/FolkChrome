@@ -11,17 +11,21 @@ const locations = new Map()
     .set(4938876, 'Jaak Johansoni Kultra lava')
 
 function createButton(): HTMLElement {
-    const isMobile: boolean = window.innerWidth < 993
     const button = document.createElement('a')
-    button.innerText = '+'
+
     button.style.position = 'absolute'
     button.style.fontWeight = 'medium'
-    button.style.left = isMobile ? '10px' : '0'
-    button.style.top = isMobile ? '0' : '0'
     button.style.background = 'none'
     button.style.border = 'none'
+    button.innerText = '+'
+
+    styleButtonResponsive(isMobile(), button)
 
     return button
+}
+
+function isMobile(): boolean {
+    return window.innerWidth < 993
 }
 
 function createUrl(row: Element, startTime: Date, endTime: Date, locationId: number, detailsUrl: string): string {
@@ -41,6 +45,11 @@ function createUrl(row: Element, startTime: Date, endTime: Date, locationId: num
     url.searchParams.append('output', 'xml')
 
     return url.toString()
+}
+
+function styleButtonResponsive(isMobile: boolean, button: HTMLElement) {
+    button.style.left = isMobile ? '10px' : '0'
+    button.style.top = isMobile ? '0' : '0'
 }
 
 rows.forEach((row: Element) => {
@@ -68,10 +77,7 @@ rows.forEach((row: Element) => {
 
     row.querySelector('a')?.after(button)
 
-    window.addEventListener('resize', (e) => {
-        const isMobile: boolean = window.innerWidth < 993
-
-        button.style.left = isMobile ? '10px' : '0'
-        button.style.top = isMobile ? '0' : '0'
+    window.addEventListener('resize', e => {
+        styleButtonResponsive(isMobile(), button)
     })
 })
