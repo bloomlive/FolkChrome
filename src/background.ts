@@ -106,41 +106,50 @@ function addSelector() {
 
   selector.addEventListener("change", function() {
     currentType = this.value as IEventFileType;
+    document.querySelectorAll('.calendar-link-add').forEach((link: Element) => {
+      link.parentElement?.removeChild(link)
+    })
+
+    createAddButtons();
   });
 
   if (element) {
     element.after(selector);
     const label = document.createElement("label");
+    label.setAttribute("for", "calendar-link-selector");
     label.innerText = "Vali kalendri tüüp: ";
     label.style.marginRight = "4px";
     selector.before(label);
   }
 }
 
-rows.forEach((row: Element) => {
-  ;(row as HTMLElement).style.position = "relative";
+function createAddButtons() {
+  rows.forEach((row: Element) => {
+    ;(row as HTMLElement).style.position = "relative";
 
-  const button = createButton();
+    const button = createButton();
 
-  button.setAttribute('href', createEventHref(row));
-  button.setAttribute('target', '_blank')
-  button.setAttribute("download", row.querySelector(".title")?.querySelector("div")?.textContent?.trim()!);
+    button.classList.add('calendar-link-add')
 
-  console.log(row.querySelector("a")?.getAttribute("href")?.replace("#", ""));
+    button.setAttribute('href', createEventHref(row));
+    button.setAttribute('target', '_blank')
+    button.setAttribute("download", row.querySelector(".title")?.querySelector("div")?.textContent?.trim()!);
 
-  row.querySelector("a")?.after(button);
+    row.querySelector("a")?.after(button);
 
-  window.addEventListener("resize", () => {
-    styleButtonResponsive(isMobile(), button);
+    window.addEventListener("resize", () => {
+      styleButtonResponsive(isMobile(), button);
+    });
+
+    button.addEventListener("mouseenter", () => {
+      button.style.color = "#b31b34";
+    });
+
+    button.addEventListener("mouseleave", () => {
+      button.style.color = "black";
+    });
   });
-
-  button.addEventListener("mouseenter", () => {
-    button.style.color = "#b31b34";
-  });
-
-  button.addEventListener("mouseleave", () => {
-    button.style.color = "black";
-  });
-});
+}
 
 addSelector();
+createAddButtons();
