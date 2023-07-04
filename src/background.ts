@@ -17,6 +17,7 @@ function createButton(): HTMLElement {
     button.style.fontWeight = 'medium'
     button.style.background = 'none'
     button.style.border = 'none'
+    button.style.padding = "4px"
     button.innerText = '+'
 
     styleButtonResponsive(isMobile(), button)
@@ -79,5 +80,13 @@ rows.forEach((row: Element) => {
 
     window.addEventListener('resize', e => {
         styleButtonResponsive(isMobile(), button)
+    })
+
+    button.addEventListener('mouseenter', e => {
+        button.style.color = '#b31b34'
+    })
+
+    button.addEventListener('mouseleave', e => {
+        button.style.color = 'black'
     })
 })
