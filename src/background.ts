@@ -18,6 +18,7 @@ function createButton(): HTMLElement {
     button.style.background = 'none'
     button.style.border = 'none'
     button.style.padding = "4px"
+    button.style.fontSize = '1rem'
     button.innerText = '+'
 
     styleButtonResponsive(isMobile(), button)
