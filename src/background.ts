@@ -1,4 +1,8 @@
+import { google, ics, office365, outlook, yahoo } from 'calendar-link'
+
 const rows = document.querySelectorAll('.event-row')
+
+let currentType: IEventType = 'ics'
 
 const locations = new Map()
     .set(4936143, 'Kaevumägi')
@@ -10,6 +14,15 @@ const locations = new Map()
     .set(4936149, 'Babtistikirik')
     .set(4938876, 'Jaak Johansoni Kultra lava')
 
+const linkType = new Map<IEventType, string>()
+    .set('ics', 'iCal')
+    .set('google', 'Google Calendar')
+    .set('yahoo', 'Yahoo Calendar')
+    .set('outlook', 'Outlook.com')
+    .set('office365', 'Office 365')
+
+type IEventType = 'google' | 'yahoo' | 'outlook' | 'office365' | 'ics'
+
 function createButton(): HTMLElement {
     const button = document.createElement('a')
 
@@ -17,8 +30,9 @@ function createButton(): HTMLElement {
     button.style.fontWeight = 'medium'
     button.style.background = 'none'
     button.style.border = 'none'
-    button.style.padding = "4px"
+    button.style.padding = '4px'
     button.style.fontSize = '1rem'
+    button.style.cursor = 'pointer'
     button.innerText = '+'
 
     styleButtonResponsive(isMobile(), button)
@@ -30,28 +44,63 @@ function isMobile(): boolean {
     return window.innerWidth < 993
 }
 
-function createUrl(row: Element, startTime: Date, endTime: Date, locationId: number, detailsUrl: string): string {
-    const url = new URL('https://www.google.com/calendar/render')
-    url.searchParams.append('action', 'TEMPLATE')
-    url.searchParams.append(
-        'text',
-        row.querySelector('.title')?.querySelector('div')?.textContent?.trim() ?? 'Something went wrong.'
-    )
-    url.searchParams.append(
-        'dates',
-        `${startTime.toISOString().replace(/-|:|\.\d+/g, '')}/${endTime.toISOString().replace(/-|:|\.\d+/g, '')}`
-    )
-    url.searchParams.append('details', 'Vaata rohkem siit: ' + detailsUrl)
-    url.searchParams.append('location', location ? locations.get(locationId) : 'Viljandi Pärimusmuusika Festival')
-    url.searchParams.append('sf', 'true')
-    url.searchParams.append('output', 'xml')
+function createEventHref(
+    row: Element,
+    startTime: Date,
+    endTime: Date,
+    locationId: number,
+    detailsUrl: string,
+    type: IEventType
+): string {
+    const data = {
+        title: row.querySelector('.title')?.querySelector('div')?.textContent?.trim() ?? 'Something went wrong.',
+        description: 'Vaata rohkem siit: ' + detailsUrl,
+        start: startTime,
+        end: endTime,
+        location: location ? locations.get(locationId) : 'Viljandi Pärimusmuusika Festival'
+    }
 
-    return url.toString()
+    switch (type) {
+        case 'google':
+            return google(data)
+        case 'yahoo':
+            return yahoo(data)
+        case 'outlook':
+            return outlook(data)
+        case 'office365':
+            return office365(data)
+        case 'ics':
+            return ics(data)
+        default:
+            return ics(data)
+    }
 }
 
 function styleButtonResponsive(isMobile: boolean, button: HTMLElement) {
     button.style.left = isMobile ? '10px' : '0'
     button.style.top = isMobile ? '0' : '0'
+}
+
+function addSelector() {
+    const element = document.querySelector('.nav-links.d-flex')
+    const selector = document.createElement('select')
+    selector.id = 'calendar-link-selector'
+    selector.style.marginBottom = '12px'
+
+    linkType.forEach((value, key) => {
+        const option = document.createElement('option')
+        option.value = key
+        option.text = value
+        selector.appendChild(option)
+    })
+
+    selector.addEventListener('change', function (e) {
+        currentType = this.value as IEventType
+    })
+
+    if (element) {
+        element.after(selector)
+    }
 }
 
 rows.forEach((row: Element) => {
@@ -74,8 +123,10 @@ rows.forEach((row: Element) => {
 
     const detailsUrl = row.querySelector('a')?.href ?? 'https://www.viljandifolk.ee/'
 
-    button.setAttribute('href', createUrl(row, startTime, endTime, location, detailsUrl))
-    button.setAttribute('target', '_blank')
+    button.addEventListener('click', e => {
+        e.preventDefault()
+        window.open(createEventHref(row, startTime, endTime, location, detailsUrl, currentType), '_blank')
+    })
 
     row.querySelector('a')?.after(button)
 
@@ -91,3 +142,5 @@ rows.forEach((row: Element) => {
         button.style.color = 'black'
     })
 })
+
+addSelector()
