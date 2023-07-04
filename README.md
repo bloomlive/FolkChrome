@@ -15,7 +15,7 @@ Actually only adds a select field to choose calendar type (ICS by default) and a
 6. Enable "Developer mode"
 7. Click "Load unpacked extension..."
 8. Select the folder where you cloned the repository
-9. Go to [Viljandi Folk schedule](https://www.viljandifolk.ee/en/schedule/) and see a "+" on the right side of every concert
+9. Go to [Viljandi Folk schedule](https://www.viljandifolk.ee/en/schedule/) and see a "+" on the top left of every concert
 
 If you use watch, changes will be reloaded only when you press "Update" in Google Chrome.
 
