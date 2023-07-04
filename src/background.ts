@@ -1,9 +1,9 @@
 import { CalendarEvent, google, ics, office365, outlook, yahoo } from 'calendar-link'
-import useI18n from "./usei18n";
+import useI18n from './usei18n'
 
 import type { IEventFileType } from '../types/IEventFileType'
 import type { ILanguage } from '../types/ILanguage'
-import usei18n from "./usei18n";
+import usei18n from './usei18n'
 
 const rows = document.querySelectorAll('.event-row')
 
@@ -11,10 +11,10 @@ let currentType: IEventFileType = 'ics'
 
 const currentLanguage: ILanguage = document.querySelector('html')!.getAttribute('lang')! as ILanguage
 
-useI18n.locale = currentLanguage;
+useI18n.locale = currentLanguage
 
 const linkType = new Map<IEventFileType, string>()
-    .set('ics', useI18n.t("formats.ics"))
+    .set('ics', useI18n.t('formats.ics'))
     .set('google', 'Google Calendar')
     .set('yahoo', 'Yahoo Calendar')
     .set('outlook', 'Outlook.com')
@@ -54,13 +54,14 @@ function getEventData(row: Element): CalendarEvent {
     }
 
     return {
-        title: row.querySelector('.title')?.querySelector('div')?.textContent?.trim() ?? useI18n.t("error"),
-        description: useI18n.t("description.prefix") + ': ' + row.querySelector('a')?.href ?? 'https://www.viljandifolk.ee/',
+        title: row.querySelector('.title')?.querySelector('div')?.textContent?.trim() ?? useI18n.t('error'),
+        description:
+            useI18n.t('description.prefix') + ': ' + row.querySelector('a')?.href ?? 'https://www.viljandifolk.ee/',
         start: startTime,
         end: endTime,
         location: location
-            ? usei18n.t("stages." + Number(row.parentElement?.parentElement?.parentElement?.getAttribute('data-id')))
-            : useI18n.t("stages.default")
+            ? usei18n.t('stages.' + Number(row.parentElement?.parentElement?.parentElement?.getAttribute('data-id')))
+            : useI18n.t('stages.default')
     }
 }
 
