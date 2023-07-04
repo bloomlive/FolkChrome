@@ -21,6 +21,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "calendar-link": "^2.4.0"
+    "calendar-link": "^2.4.0",
+    "i18n-js": "^4.2.3"
   }
 }
