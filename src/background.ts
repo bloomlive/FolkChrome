@@ -4,7 +4,7 @@ const rows = document.querySelectorAll(".event-row");
 
 let currentType: IEventType = "ics";
 
-const locations = new Map()
+const locations = new Map<number, string>()
   .set(4936143, "Kaevumägi")
   .set(4936141, "I Kirsimägi")
   .set(4936142, "II Kirsimägi")
