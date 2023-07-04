@@ -2,9 +2,9 @@
 
 # FolkChrome Google Chrome browser extension
 ![ViljandiFolker Screenshot](screenshot.png)
-**Unofficial [Viljandi Folk](https://www.viljandifolk.ee/)** schedule extension that allows you to easily create Google Calendar events from the schedule. Built because I am too lazy to fill in the schedule in my calendar every single year, so I was looking for a way to simplify it.
+**Unofficial [Viljandi Folk](https://www.viljandifolk.ee/)** schedule extension that allows you to easily create calendar events from the schedule. Supports Google Calendar, iCal format (ICS), Office 365, Outlook and Yahoo! Calendar. Built because I am too lazy to fill in the schedule in my calendar every single year, so I was looking for a way to simplify it.
 
-Actually only adds a small "+" anchor link to every concert in the schedule that allows you to add the concert to your Google Calendar. Fills in all the details I deemed needed, but you can always edit the event in Google Calendar afterwards.
+Actually only adds a select field to choose calendar type (ICS by default) and a small "+" anchor link to every concert in the schedule that allows you to add the concert to your calendar. Fills in all the details I deemed needed, but you can always edit the event in your calendar afterwards.
 
 ## Installation
 1. Clone the repository
