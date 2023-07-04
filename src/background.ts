@@ -67,4 +67,11 @@ rows.forEach((row: Element) => {
     button.setAttribute('target', '_blank')
 
     row.querySelector('a')?.after(button)
+
+    window.addEventListener('resize', (e) => {
+        const isMobile: boolean = window.innerWidth < 993
+
+        button.style.left = isMobile ? '10px' : '0'
+        button.style.top = isMobile ? '0' : '0'
+    })
 })
