@@ -6,6 +6,8 @@
 
 Actually only adds a select field to choose calendar type (ICS by default) and a small "+" anchor link to every concert in the schedule that allows you to add the concert to your calendar. Fills in all the details I deemed needed, but you can always edit the event in your calendar afterwards.
 
+Supports both Estonian and English versions of the schedule (based on user's preference on the website).
+
 ## Installation
 1. Clone the repository
 2. `pnpm install` (or yarn or npm)
@@ -14,7 +16,7 @@ Actually only adds a select field to choose calendar type (ICS by default) and a
 5. Go to `chrome://extensions/`
 6. Enable "Developer mode"
 7. Click "Load unpacked extension..."
-8. Select the folder where you cloned the repository
+8. Select the `dist` folder in the root of the project (ignored on Git)
 9. Go to [Viljandi Folk schedule](https://www.viljandifolk.ee/en/schedule/) and see a "+" on the top left of every concert
 
 If you use watch, changes will be reloaded only when you press "Update" in Google Chrome.
