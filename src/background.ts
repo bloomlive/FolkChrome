@@ -133,7 +133,7 @@ function createAddButtons() {
 
     button.setAttribute('href', createEventHref(row));
     button.setAttribute('target', '_blank')
-    button.setAttribute("download", row.querySelector(".title")?.querySelector("div")?.textContent?.trim()!);
+    button.setAttribute("download", row.querySelector(".title")?.querySelector("div")?.textContent?.trim()! + ".ics");
 
     row.querySelector("a")?.after(button);
 
